@@ -14,7 +14,7 @@ const songs = ["hey", "summer", "ukulele", "river"];
 let songIndex = 2;
 
 window.addEventListener("load", function () {
-  console.log("Az oldal sikeres betöltődött.");
+  console.log("Az oldal sikeresen betöltődött.");
 });
 
 //Zene adatainak betöltése a DOMba
