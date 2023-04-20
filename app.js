@@ -13,80 +13,72 @@ const songs = ["hey", "summer", "ukulele", "river"];
 //Kiinduló zene indexe
 let songIndex = 2;
 
+window.addEventListener("load", function () {
+  console.log("Az oldal sikeres betöltődött.");
+});
+
 //Zene adatainak betöltése a DOMba
 loadSong(songs[songIndex]);
 
-
 //Frissítjük a zenék adatait
-function loadSong(song){
-
-    title.innerText = song;
-    audio.src = `music/${song}.mp3`;
-    cover.src = `images/${song}.jpg`;
+function loadSong(song) {
+  title.innerText = song;
+  audio.src = `music/${song}.mp3`;
+  cover.src = `images/${song}.jpg`;
 }
 
 //Zene lejátszása
-function playSong(){
+function playSong() {
+  musicContainer.classList.add("play");
+  playBtn.querySelector("i.fas").classList.remove("fa-play");
+  playBtn.querySelector("i.fas").classList.add("fa-pause");
 
-    musicContainer.classList.add("play");
-    playBtn.querySelector("i.fas").classList.remove("fa-play");
-    playBtn.querySelector("i.fas").classList.add("fa-pause");
-
-    audio.play();
+  audio.play();
 }
 
 //Zene megállíátsa
-function pauseSong(){
+function pauseSong() {
+  musicContainer.classList.remove("play");
+  playBtn.querySelector("i.fas").classList.add("fa-play");
+  playBtn.querySelector("i.fas").classList.remove("fa-pause");
 
-    musicContainer.classList.remove("play");
-    playBtn.querySelector("i.fas").classList.add("fa-play");
-    playBtn.querySelector("i.fas").classList.remove("fa-pause");
-
-    audio.pause();
-
+  audio.pause();
 }
 
 //Zene léptetése előre
-function nextSong(){
+function nextSong() {
+  songIndex++;
 
-    songIndex++;
+  if (songIndex > songs.length - 1) {
+    songIndex = 0;
+  }
 
-    if(songIndex > songs.length -1){
-
-        songIndex = 0;
-    }
-
-    loadSong(songs[songIndex]);
-    playSong();
+  loadSong(songs[songIndex]);
+  playSong();
 }
 
 //Zene léptetése vissza
-function prevSong(){
+function prevSong() {
+  songIndex--;
 
-    songIndex--;
+  if (songIndex < 0) {
+    songIndex = songs.length - 1;
+  }
 
-    if(songIndex < 0){
-
-        songIndex = songs.length -1;
-    }
-
-    loadSong(songs[songIndex]);
-    playSong();
+  loadSong(songs[songIndex]);
+  playSong();
 }
 
-
 //Zene lejátszása - eseménykezelés
-playBtn.addEventListener("click", function(){
+playBtn.addEventListener("click", function () {
+  const isPlaying = musicContainer.classList.contains("play");
 
-    const isPlaying = musicContainer.classList.contains("play");
-
-   if(isPlaying){
-        pauseSong();
-   }
-   else{
-        playSong();
-   }
-})
+  if (isPlaying) {
+    pauseSong();
+  } else {
+    playSong();
+  }
+});
 
 //Zene léptetése - eseménykezelés
 nextBtn.addEventListener("click", nextSong);
@@ -94,5 +86,3 @@ prevBtn.addEventListener("click", prevSong);
 
 //Ha a zene végetért lépjen a következőre
 audio.addEventListener("ended", nextSong);
-
-
